@@ -28,16 +28,21 @@ jobs:
           ref: ${{ github.ref }}
           fetch-depth: 0
 
-      - name: Build CV pdf
+      - name: Build latex container
         run: |
           docker build --tag tex-compiler .
+
+      - name: Build pdf
+        run: |
           docker run -v $(pwd)/cv:/tmp tex-compiler xelatex cv.tex
       # - name: Pack and deploy bootstrap.sh
       #   run: |
       #     aws s3 cp tools/github-actions-runner/bootstrap.sh s3://${{ env.S3_BUCKET }}/actions_runner --acl public-read
       #     aws s3api put-object-tagging --key actions_runner/bootstrap.sh --bucket ${{ env.S3_BUCKET }} --tagging 'TagSet=[{Key=version, Value=${{ github.sha }}},{Key=application, Value=actions_runner}]'
 
-      - uses: actions/upload-artifact@v2
+      # Github Action repository: https://github.com/actions/upload-artifact
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
         with:
           name: cv
           path: cv/cv.pdf
