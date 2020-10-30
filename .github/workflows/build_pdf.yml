@@ -30,7 +30,8 @@ jobs:
 
       - name: Build CV pdf
         run: |
-          docker-compose run tex-compiler xelatex cv.tex
+          docker build --tag tex-compiler .
+          docker run -v $(pwd)/cv:/tmp tex-compiler xelatex cv.tex
       # - name: Pack and deploy bootstrap.sh
       #   run: |
       #     aws s3 cp tools/github-actions-runner/bootstrap.sh s3://${{ env.S3_BUCKET }}/actions_runner --acl public-read
