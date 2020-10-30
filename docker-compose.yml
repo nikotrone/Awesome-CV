@@ -1,0 +1,9 @@
+version: '3.7'
+services:
+  tex-compiler:
+    build: .
+    image: some-tex-compiler
+    # environment:
+    # - JAVA_OPTS=-Djenkins.install.runSetupWizard=false -Dpermissive-script-security.enabled=true
+    volumes:
+    - ./cv:/tmp
